@@ -42,3 +42,40 @@ app.get("/api/categories",function (req,res){
         else res.send(data);
     });
 });
+
+app.get("/api/products/detail",function (req,res){
+    var id = req.query.id;
+    var sql = `select * from products where id = ${id}`;
+    conn.query(sql,function (err,data){
+        if(err) res.send(err);
+        else if(data.length > 0)
+            res.send(data[0]);
+        else res.send("404 not found");
+    });
+});
+
+app.get("/api/products/search",function (req,res){
+    var name = req.query.name;
+    var sql = `select * from products where name like '%${name}%'`;
+    conn.query(sql,function (err,data){
+        if(err) res.send(err);
+        else res.send(data);
+    });
+});
+
+app.get("/api/products/category",function (req,res){
+    var category_id = req.query.category_id;
+    var sql = `select * from products where category_id = ${id}`;
+    conn.query(sql,function (err,data){
+        if(err) res.send(err);
+        else  res.send(data);
+    });
+});
+
+app.get("/api/products/home",function (req,res){
+    var sql = `select * from products;select * from categories;`;
+    conn.query(sql,function (err,data){
+        if(err) res.send(err);
+        else  res.send(data);
+    });
+});
